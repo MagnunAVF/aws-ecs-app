@@ -33,6 +33,16 @@ variable "service_healthcheck" {
   description = "Health check configurations for the service, such as path and protocol."
 }
 
+variable "service_launch_type" {
+  type        = string
+  description = "Launch type of the service in ECS, can be 'FARGATE' or 'EC2'."
+}
+
+variable "service_task_count" {
+  type        = number
+  description = "Number of tasks that the service should keep running simultaneously."
+}
+
 variable "ssm_vpc_id" {
   type        = string
   description = "VPC ID stored in AWS Systems Manager (SSM) where the service will be deployed."
