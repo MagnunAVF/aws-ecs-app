@@ -38,6 +38,11 @@ variable "service_launch_type" {
   description = "Launch type of the service in ECS, can be 'FARGATE' or 'EC2'."
 }
 
+variable "service_hosts" {
+  type        = list(string)
+  description = "List of addresses or host names assigned to the service for load balancing or exposure."
+}
+
 variable "service_task_count" {
   type        = number
   description = "Number of tasks that the service should keep running simultaneously."
