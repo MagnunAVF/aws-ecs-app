@@ -28,6 +28,11 @@ variable "service_memory" {
   description = "Amount of memory reserved for the service, in megabytes."
 }
 
+variable "service_healthcheck" {
+  type        = map(any)
+  description = "Health check configurations for the service, such as path and protocol."
+}
+
 variable "ssm_vpc_id" {
   type        = string
   description = "VPC ID stored in AWS Systems Manager (SSM) where the service will be deployed."
