@@ -52,3 +52,13 @@ variable "ssm_private_subnet_3" {
   type        = string
   description = "ID of the third private subnet, stored in AWS SSM, used for service deployment."
 }
+
+variable "environment_variables" {
+  type        = list(map(string))
+  description = "List of environment variables that will be passed to the service tasks."
+}
+
+variable "capabilities" {
+  type        = list(string)
+  description = "List of special capabilities required for the service, such as 'SYS_ADMIN' for certain system privileges."
+}

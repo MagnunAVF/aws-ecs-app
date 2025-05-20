@@ -9,6 +9,10 @@ module "service" {
   service_listener            = data.aws_ssm_parameter.listener.value
   service_task_execution_role = aws_iam_role.main.arn
 
+  environment_variables = var.environment_variables
+
+  capabilities = var.capabilities
+
   vpc_id = data.aws_ssm_parameter.vpc_id.value
   private_subnets = [
     data.aws_ssm_parameter.private_subnet_1.value,
