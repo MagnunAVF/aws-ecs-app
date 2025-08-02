@@ -132,3 +132,38 @@ variable "scale_out_cooldown" {
   type        = number
   description = "Cooldown period after a scale-out action, in seconds."
 }
+
+variable "scale_in_cpu_threshold" {
+  type        = number
+  description = "CPU utilization threshold value that, when below, triggers a scale-in action, in percentage."
+}
+
+variable "scale_in_adjustment" {
+  type        = number
+  description = "Number of tasks to reduce during a scale-in action."
+}
+
+variable "scale_in_comparison_operator" {
+  type        = string
+  description = "Comparison operator used for the scale-in condition, such as 'LessThanOrEqualToThreshold'."
+}
+
+variable "scale_in_statistic" {
+  type        = string
+  description = "Statistic used for the scale-in condition, such as 'Average' or 'Sum'."
+}
+
+variable "scale_in_period" {
+  type        = number
+  description = "Duration of the evaluation period for scale-in, in seconds."
+}
+
+variable "scale_in_evaluation_periods" {
+  type        = number
+  description = "Number of evaluation periods required to trigger a scale-in action."
+}
+
+variable "scale_in_cooldown" {
+  type        = number
+  description = "Cooldown period after a scale-in action, in seconds."
+}
