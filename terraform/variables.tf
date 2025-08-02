@@ -73,6 +73,11 @@ variable "ssm_private_subnet_3" {
   description = "ID of the third private subnet, stored in AWS SSM, used for service deployment."
 }
 
+variable "ssm_alb" {
+  type        = string
+  description = "ARN of an Application Load Balancer (ALB), stored in AWS SSM, that will be used by the service."
+}
+
 variable "environment_variables" {
   type        = list(map(string))
   description = "List of environment variables that will be passed to the service tasks."
@@ -171,4 +176,9 @@ variable "scale_in_cooldown" {
 variable "scale_tracking_cpu" {
   type        = number
   description = "Target CPU utilization value for scale tracking, in percentage."
+}
+
+variable "scale_tracking_requests" {
+  type        = number
+  description = "Target number of requests per second (TPS) for scale tracking."
 }
