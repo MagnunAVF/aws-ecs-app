@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.raw({ type: "*/*", limit: "50mb" }));
 
 app.get("/version", (req, res) => {
-  res.send("v1");
+  res.send("v2");
 });
 
 app.get("/healthcheck", (req, res) => {
@@ -95,6 +95,29 @@ app.get("/printenv", (req, res) => {
     ([key, value]) => `${key}=${value}`
   );
   res.json(envVars);
+});
+
+app.get("/burn-cpu", (req, res) => {
+  const duration = parseInt(req.query.duration) || 5;
+  const safeDuration = Math.min(duration, 30);
+
+  console.log(`Starting CPU burn for ${safeDuration} seconds`);
+  const startTime = Date.now();
+  const endTime = startTime + (safeDuration * 1000);
+
+  while (Date.now() < endTime) {
+    for (let i = 0; i < 1000000; i++) {
+      Math.sqrt(Math.random() * 10000) * Math.sin(Math.random() * 10000);
+    }
+  }
+
+  const actualDuration = (Date.now() - startTime) / 1000;
+
+  res.json({
+    message: `CPU burn completed`,
+    requested_duration_seconds: safeDuration,
+    actual_duration_seconds: actualDuration.toFixed(2)
+  });
 });
 
 function isValidUUID(str) {
