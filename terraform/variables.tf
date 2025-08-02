@@ -82,3 +82,53 @@ variable "capabilities" {
   type        = list(string)
   description = "List of special capabilities required for the service, such as 'SYS_ADMIN' for certain system privileges."
 }
+
+variable "scale_type" {
+  type        = string
+  description = "Type of scalability, such as 'cpu', 'cpu_tracking' or 'requests_tracking'."
+}
+
+variable "task_minimum" {
+  type        = number
+  description = "Minimum number of tasks that should be run by the service."
+}
+
+variable "task_maximum" {
+  type        = number
+  description = "Maximum number of tasks that can be run by the service."
+}
+
+variable "scale_out_cpu_threshold" {
+  type        = number
+  description = "CPU utilization threshold value that, when exceeded, triggers a scale-out action, in percentage."
+}
+
+variable "scale_out_adjustment" {
+  type        = number
+  description = "Number of tasks to add during a scale-out action."
+}
+
+variable "scale_out_comparison_operator" {
+  type        = string
+  description = "Comparison operator used for the scale-out condition, such as 'GreaterThanOrEqualToThreshold'."
+}
+
+variable "scale_out_statistic" {
+  type        = string
+  description = "Statistic used for the scale-out condition, such as 'Average' or 'Sum'."
+}
+
+variable "scale_out_period" {
+  type        = number
+  description = "Duration of the evaluation period for scale-out, in seconds."
+}
+
+variable "scale_out_evaluation_periods" {
+  type        = number
+  description = "Number of evaluation periods required to trigger a scale-out action."
+}
+
+variable "scale_out_cooldown" {
+  type        = number
+  description = "Cooldown period after a scale-out action, in seconds."
+}
