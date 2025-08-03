@@ -100,6 +100,7 @@ variable "secrets" {
     valueFrom : string
   }))
   description = "List of secrets from parameter store or secrets manager"
+  default     = []
 }
 
 variable "capabilities" {

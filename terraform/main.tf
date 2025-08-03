@@ -16,7 +16,16 @@ module "service" {
   container_image = var.container_image
 
   environment_variables = var.environment_variables
-  secrets               = var.secrets
+  secrets = [
+    {
+      name      = "MY_CUSTOM_ENV"
+      valueFrom = aws_ssm_parameter.MY_CUSTOM_ENV.arn
+    },
+    {
+      name      = "MY_CUSTOM_SECRET"
+      valueFrom = aws_secretsmanager_secret.MY_CUSTOM_SECRET.arn
+    }
+  ]
 
   capabilities = var.capabilities
 
