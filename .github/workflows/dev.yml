@@ -1,0 +1,37 @@
+name: CI/CD Pipeline - Dev
+
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  AWS_ACCOUNT: ${{ secrets.AWS_ACCOUNT }}
+  AWS_REGION: "us-east-1"
+  APP_NAME: "mavf-app"
+  CLUSTER_NAME: "mavf-ecs-cluster"
+  REPOSITORY_NAME: "mavf/$APP_NAME"
+
+jobs:
+  ci-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Nodejs
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./app
+
+    - name: Lint App
+      run: npm run lint
+      working-directory: ./app
+
+    - name: Test App
+      run: npm run test
+      working-directory: ./app
