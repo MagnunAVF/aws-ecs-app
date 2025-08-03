@@ -1,5 +1,5 @@
 module "service" {
-  source                      = "github.com/MagnunAVF/aws-ecs-service-module?ref=v1.1.0"
+  source                      = "github.com/MagnunAVF/aws-ecs-service-module?ref=v1.2.0"
   region                      = var.region
   cluster_name                = var.cluster_name
   service_name                = var.service_name
@@ -16,6 +16,7 @@ module "service" {
   container_image = var.container_image
 
   environment_variables = var.environment_variables
+  secrets               = var.secrets
 
   capabilities = var.capabilities
 
