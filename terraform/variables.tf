@@ -8,6 +8,11 @@ variable "cluster_name" {
   description = "Name of the ECS cluster that will host the service."
 }
 
+variable "container_image" {
+  type        = string
+  description = "Container image with tag to be used by the service."
+}
+
 variable "service_name" {
   type        = string
   description = "Name of the service to be used within the cluster."
@@ -82,8 +87,20 @@ variable "ssm_alb" {
 }
 
 variable "environment_variables" {
-  type        = list(map(string))
-  description = "List of environment variables that will be passed to the service tasks."
+  type = list(object({
+    name : string
+    value : string
+  }))
+  description = "List of environment variables that will be passed to the service."
+}
+
+variable "secrets" {
+  type = list(object({
+    name : string
+    valueFrom : string
+  }))
+  description = "List of secrets from parameter store or secrets manager"
+  default     = []
 }
 
 variable "capabilities" {

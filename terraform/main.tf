@@ -1,5 +1,5 @@
 module "service" {
-  source                      = "LOCAL_PATH"
+  source                      = "github.com/MagnunAVF/aws-ecs-service-module?ref=v1.2.0"
   region                      = var.region
   cluster_name                = var.cluster_name
   service_name                = var.service_name
@@ -13,7 +13,19 @@ module "service" {
   service_task_count          = var.service_task_count
   service_hosts               = var.service_hosts
 
+  container_image = var.container_image
+
   environment_variables = var.environment_variables
+  secrets = [
+    {
+      name      = "MY_CUSTOM_ENV"
+      valueFrom = aws_ssm_parameter.MY_CUSTOM_ENV.arn
+    },
+    {
+      name      = "MY_CUSTOM_SECRET"
+      valueFrom = aws_secretsmanager_secret.MY_CUSTOM_SECRET.arn
+    }
+  ]
 
   capabilities = var.capabilities
 
@@ -22,6 +34,16 @@ module "service" {
     data.aws_ssm_parameter.private_subnet_1.value,
     data.aws_ssm_parameter.private_subnet_2.value,
     data.aws_ssm_parameter.private_subnet_3.value,
+  ]
+
+  efs_volumes = [
+    {
+      volume_name      = "efs_volume"
+      file_system_id   = aws_efs_file_system.main.id
+      file_system_root = "/"
+      mount_point      = "/mnt/efs"
+      read_only        = false
+    }
   ]
 
   # Autoscaling
