@@ -101,13 +101,19 @@ jobs:
 
     - name: Create ECR repository if not exists
       run: |
-        chmod +x ./scripts/create_ecr.sh
-        ./scripts/create_ecr.sh
+        set +e
+        REPO_EXISTS=$(aws ecr describe-repositories --repository-names ${{ env.REPOSITORY_NAME }} 2>&1)
+        if [[ $REPO_EXISTS == *"RepositoryNotFoundException"* ]]; then
+          echo "Repository ${{ env.REPOSITORY_NAME }} not found. Creating..."
+          aws ecr create-repository --repository-name ${{ env.REPOSITORY_NAME }}
+        else
+          echo "Repository ${{ env.REPOSITORY_NAME }} already exists."
+        fi
+        set -e
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_REGION: ${{ env.AWS_REGION }}
-        REPOSITORY_NAME: ${{ env.REPOSITORY_NAME }}
 
     - name: Tag Image
       run: docker tag app:latest ${{ env.AWS_ACCOUNT }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.REPOSITORY_NAME }}:${GITHUB_SHA::8}
