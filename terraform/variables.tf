@@ -8,6 +8,11 @@ variable "cluster_name" {
   description = "Name of the ECS cluster that will host the service."
 }
 
+variable "container_image" {
+  type        = string
+  description = "Container image with tag to be used by the service."
+}
+
 variable "service_name" {
   type        = string
   description = "Name of the service to be used within the cluster."
