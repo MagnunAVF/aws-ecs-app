@@ -136,6 +136,17 @@ jobs:
       with:
         terraform_version: "1.12.2"
 
+    - name: Terraform get vars
+      run: |
+        chmod +x ./scripts/get_tf_vars.sh
+        ./scripts/get_tf_vars.sh
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_REGION: ${{ env.AWS_REGION }}
+        S3_TF_BACKEND_URI: ${{ secrets.S3_TF_BACKEND_URI }}
+        S3_TF_TERRAFORM_URI: ${{ secrets.S3_TF_TERRAFORM_URI }}
+
     - name: Terraform Init
       run: terraform init -backend-config=environment/${GITHUB_REF_NAME}/backend.tfvars
       working-directory: ./terraform
