@@ -1,5 +1,5 @@
 module "service" {
-  source                      = "LOCAL_PATH"
+  source                      = "github.com/MagnunAVF/aws-ecs-service-module?ref=v1.0.0"
   region                      = var.region
   cluster_name                = var.cluster_name
   service_name                = var.service_name
