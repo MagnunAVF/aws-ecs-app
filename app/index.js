@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(express.raw({ type: "*/*", limit: "50mb" }));
 
 app.get("/version", (req, res) => {
-  res.send("v2");
+  res.send("v3");
 });
 
 app.get("/healthcheck", (req, res) => {
@@ -92,7 +92,7 @@ app.get("/files/:uuid", (req, res) => {
 
 app.get("/printenv", (req, res) => {
   const envVars = Object.entries(process.env).map(
-    ([key, value]) => `${key}=${value}`
+    ([key, value]) => `${key}=${value}`,
   );
   res.json(envVars);
 });
@@ -103,7 +103,7 @@ app.get("/burn-cpu", (req, res) => {
 
   console.log(`Starting CPU burn for ${safeDuration} seconds`);
   const startTime = Date.now();
-  const endTime = startTime + (safeDuration * 1000);
+  const endTime = startTime + safeDuration * 1000;
 
   while (Date.now() < endTime) {
     for (let i = 0; i < 1000000; i++) {
@@ -116,7 +116,7 @@ app.get("/burn-cpu", (req, res) => {
   res.json({
     message: `CPU burn completed`,
     requested_duration_seconds: safeDuration,
-    actual_duration_seconds: actualDuration.toFixed(2)
+    actual_duration_seconds: actualDuration.toFixed(2),
   });
 });
 
